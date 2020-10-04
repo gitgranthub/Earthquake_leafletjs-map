@@ -1,6 +1,7 @@
 .DS_Store
 config.py
-leafletStep1/**/*config.js
+**/config.py
+**/config.js
 .ipynb_checkpoints
 # Byte-compiled / optimized / DLL files
 __pycache__/
