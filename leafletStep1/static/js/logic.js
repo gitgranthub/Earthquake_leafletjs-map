@@ -6,6 +6,7 @@ d3.json(queryUrl, function(data) {
   // Once we get a response, send the data.features object to the createFeatures function
   createFeatures(data.features);
 });
+console.log(createFeatures);
 
 function createFeatures(earthquakeData) {
 
@@ -47,8 +48,8 @@ function createMap(earthquakes) {
 
   // Define a baseMaps object to hold our base layers
   var baseMaps = {
-    "Street Map": streetmap,
-    "Dark Map": darkmap
+    "Dark Map": darkmap,
+    "Street Map": streetmap
   };
 
   // Create overlay object to hold our overlay layer
@@ -57,12 +58,12 @@ function createMap(earthquakes) {
   };
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load
-  var myMap = L.map("map-id", {
+  var myMap = L.map("map", {
     center: [
-      37.09, -95.71
+      37.257, -121.80
     ],
     zoom: 5,
-    layers: [streetmap, earthquakes]
+    layers: [darkmap, earthquakes]
   });
 
   // Create a layer control
