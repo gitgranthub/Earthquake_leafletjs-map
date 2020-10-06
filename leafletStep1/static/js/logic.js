@@ -34,43 +34,18 @@ function createFeatures(earthquakeData) {
 
   // Create a GeoJSON layer containing the features array on the earthquakeData object
   // Run the onEachFeature function once for each piece of data in the array
-  var quakes = L.geoJSON(earthquakeData, {
+  var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: onEachFeature
   });
-  // var quakes = L.geoJSON(quakeMarkers, {
-  //   onEachFeature: onEachFeature
-  // });
-
-  // Sending our earthquakes layer to the createMap function
-  createMap(earthquakeData);
-}
-
-// function createFeatures(earthquakeData) {
   
 
-//   // Define a function we want to run once for each feature in the features array
-//   // Give each feature a popup describing the place and time of the earthquake
-//   function onEachFeature(feature, layer) {
-//     // Setting the marker radius for the city by passing population into the markerSize function
-//     layer.bindPopup("<h3>" + feature.properties.place +
-//       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
-//   }
+  // Sending our earthquakes layer to the createMap function
+  createMap(earthquakes);
+}
 
-//   // Create a GeoJSON layer containing the features array on the earthquakeData object
-//   // Run the onEachFeature function once for each piece of data in the array
-//   var earthquakes = L.geoJSON(earthquakeData, {
-//     onEachFeature: onEachFeature
-//   });
-//   // var quakes = L.geoJSON(quakeMarkers, {
-//   //   onEachFeature: onEachFeature
-//   // });
-
-//   // Sending our earthquakes layer to the createMap function
-//   createMap(earthquakes);
-// }
 
 // Create separate layer group for quakes
-// var quakes = L.layerGroup(quakeMarkers);
+//var earthquakes = L.layerGroup(earthquakeData);
 
 // Define a markerSize function that will give each earthquake a different radius based on its magnitude
 function markerSize(mag) {
