@@ -8,10 +8,6 @@ d3.json(queryUrl, function(data) {
 });
 
 
-// Define arrays to hold quake markers
-// var quakeMarkers = [];
-// console.log(quakeMarkers);
-
 function createFeatures(earthquakeData) {
   
 
@@ -20,16 +16,8 @@ function createFeatures(earthquakeData) {
   function onEachFeature(feature, layer) {
     // Setting the marker radius for the city by passing population into the markerSize function
     
-    L.circle(feature.properties.place, {
-      stroke: false,
-      fillOpacity: 0.75,
-      color: "purple",
-      fillColor: "purple",
-      radius: markerSize(feature.properties.mag)
-    })
-    
     layer.bindPopup("<h3>" + feature.properties.place +
-      "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
+      "</h3><hr><p>" + new Date(feature.properties.time) + "<hr>" + "<h3>" + "Magnitude" + "</h3>" + feature.properties.mag + "</p>");
   }
 
   // Create a GeoJSON layer containing the features array on the earthquakeData object
@@ -43,25 +31,6 @@ function createFeatures(earthquakeData) {
   createMap(earthquakes);
 }
 
-
-// Create separate layer group for quakes
-//var earthquakes = L.layerGroup(earthquakeData);
-
-// Define a markerSize function that will give each earthquake a different radius based on its magnitude
-function markerSize(mag) {
-  return mag / 40;
-}
-// Loop through the earthquake features and create one marker for each city object
-function onEachFeature(feature) {
-  L.circle(feature.properties.mag, {
-    fillOpacity: 0.75,
-    color: "white",
-    fillColor: "purple",
-    // Setting our circle's radius equal to the output of our markerSize function
-    // This will make our marker's size proportionate to its population
-    radius: markerSize(feature.properties.place)
-  }).bindPopup("<h1>" + feature.properties.place + "</h1> <hr> <h3>Population: " + feature.properties.mag + "</h3>").addTo(myMap);
-}
 function createMap(earthquakes) {
 
   // Define streetmap and darkmap layers
