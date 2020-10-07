@@ -67,7 +67,7 @@ function createFeatures(geojson) {
       
       layer.bindPopup("<h3>" + feature.properties.place +
         "</h3><hr><p>" + new Date(feature.properties.time) + "<hr>" + "<h3>" + "Magnitude" + "</h3>" + feature.properties.mag + "</p>");
-    }
+    },
     pointToLayer: function(feature, latlng) {
       return new L.CircleMarker(latlng, {
         radius: 10, 
