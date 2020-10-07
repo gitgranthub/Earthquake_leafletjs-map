@@ -48,7 +48,20 @@ function createMap(earthquakes) {
   }).addTo(myMap);
 }
 
-
+function getValue(x) {
+  if (x >= 5) {
+    return "red"
+  } else if (x >= 3.5) {
+    return "orange"
+  } else if (x >= 3.5) {
+    return "yellow"
+  } else if (x >= 2) {
+    return "green"
+  } else {
+    return "blue"
+  }
+  
+}
 
 // ACTUALLY BUILDING THE MAP FROM THE ABOVE FUNCTIONS
 function createFeatures(geojson) {
@@ -70,8 +83,12 @@ function createFeatures(geojson) {
     },
     pointToLayer: function(geoJsonPoint, latlng) {
       return new L.CircleMarker(latlng, {
-        radius: (geoJsonPoint.properties.mag * 3), 
-        fillOpacity: 0.25
+        radius: (geoJsonPoint.properties.mag * 3),
+        color: getValue(geoJsonPoint.properties.mag),
+        opacity: .3,
+        riseOnHover: true,
+        riseOffset: 250,
+        fillOpacity: .75
       });
   }
   });
