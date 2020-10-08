@@ -30,13 +30,12 @@ function createMap(earthquakes) {
     //Magnitude: quakes
   };
 
-
   // Create our map, giving it the streetmap and earthquakes layers to display on load
   var myMap = L.map("map", {
     center: [
       37.257, -121.80
     ],
-    zoom: 5,
+    zoom: 4,
     layers: [darkmap, earthquakes]
   });
 
@@ -46,22 +45,47 @@ function createMap(earthquakes) {
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
+
+  // Create a legend to display information about our map
+  var info = L.control({
+    position: "bottomright"
+  });
+
+  info.onAdd = function() {
+    var div = L.DomUtil.create("div", "legend");
+    div.innerHTML += "<h4>Earthquake Depth (km)</h4>";
+    div.innerHTML += '<i style="background: #84E1CA"></i><span>-10-10</span><br>';
+    div.innerHTML += '<i style="background: #CBE6A3"></i><span>10-30</span><br>';
+    div.innerHTML += '<i style="background: #FDDE90"></i><span>30-50</span><br>';
+    div.innerHTML += '<i style="background: #F68B76"></i><span>50-70</span><br>';
+    div.innerHTML += '<i style="background: #C6ACD4"></i><span>70-90</span><br>';
+   //div.innerHTML += '<i class="icon" style="background-image: url(https://d30y9cdsu7xlg0.cloudfront.net/png/194515-200.png);background-repeat: no-repeat;"></i><span>Grænse</span><br>';
+    
+    
+
+    return div;
+  };
+  // Add the info legend to the map
+  info.addTo(myMap);
 }
 
+// COLORS FOR THE FEATURES AND LEGEND
 function getValue(x) {
-  if (x >= 5) {
-    return "red"
-  } else if (x >= 3.5) {
-    return "orange"
-  } else if (x >= 3.5) {
-    return "yellow"
-  } else if (x >= 2) {
-    return "green"
+  if (x >= -10 && x <= 10) {
+    return "#84E1CA"
+  } else if (x <= 30) {
+    return "#CBE6A3"
+  } else if (x <= 50) {
+    return "#FDDE90"
+  } else if (x <= 70) {
+    return "#F68B76"
   } else {
-    return "blue"
+    return "#C6ACD4"
   }
   
 }
+
+
 
 // ACTUALLY BUILDING THE MAP FROM THE ABOVE FUNCTIONS
 function createFeatures(geojson) {
@@ -79,16 +103,16 @@ function createFeatures(geojson) {
       // Setting the marker radius for the city by passing population into the markerSize function
       
       layer.bindPopup("<h3>" + feature.properties.place +
-        "</h3><hr><p>" + new Date(feature.properties.time) + "<hr>" + "<h3>" + "Magnitude" + "</h3>" + feature.properties.mag + "</p>");
+        "</h3><hr><p>" + new Date(feature.properties.time) + "<hr>" + "<h3>" + "Magnitude" + "</h3>" + feature.properties.mag + "<hr>" + "<h3>" + "Depth (km)" + "</h3>" + feature.geometry.coordinates[2] + "</p>");
     },
     pointToLayer: function(geoJsonPoint, latlng) {
       return new L.CircleMarker(latlng, {
         radius: (geoJsonPoint.properties.mag * 3),
-        color: getValue(geoJsonPoint.properties.mag),
-        opacity: .3,
-        riseOnHover: true,
-        riseOffset: 250,
-        fillOpacity: .75
+        color: getValue(geoJsonPoint.geometry.coordinates[2]),
+        opacity: 1,
+        // riseOnHover: true,
+        // riseOffset: 250,
+        fillOpacity: .7
       });
   }
   });
