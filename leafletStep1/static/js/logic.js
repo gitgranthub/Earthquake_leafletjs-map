@@ -46,20 +46,42 @@ function createMap(earthquakes) {
     collapsed: false
   }).addTo(myMap);
 
+  function getColor(d) {
+    return d > 90 ? "#C6ACD4" :
+           d >= 70  ? "#C6ACD4" :
+           d >= 50  ? "#F68B76" :
+           d >= 30  ? "##FDDE90" :
+           d >= 10   ? "#CBE6A3" :
+           d >= -10   ? "#84E1CA" :
+                      "#86FF33";
+  }
+
   // Create a legend to display information about our map
   var info = L.control({
     position: "bottomright"
   });
 
   info.onAdd = function() {
-    var div = L.DomUtil.create("div", "legend");
-    div.innerHTML += "<h4>Earthquake Depth (km)</h4>";
+    var div = L.DomUtil.create("div", "legend")
+    depth = [-10, 10, 30, 50, 70, 90]
+        labels = [];
+        div.innerHTML += "<h4>Earthquake Depth (km)</h4>"
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    // for (var i = 0; i < depth.length; i++) {
+    //     div.innerHTML +=
+    //         '<i style="background:' + getColor(depth[i] + 1) + '"></i> ' +
+    //         depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
+    // }
+
+    
+    // div.innerHTML += "<h4>Earthquake Depth (km)</h4>";
     div.innerHTML += '<i style="background: #84E1CA"></i><span>-10-10</span><br>';
     div.innerHTML += '<i style="background: #CBE6A3"></i><span>10-30</span><br>';
     div.innerHTML += '<i style="background: #FDDE90"></i><span>30-50</span><br>';
     div.innerHTML += '<i style="background: #F68B76"></i><span>50-70</span><br>';
     div.innerHTML += '<i style="background: #C6ACD4"></i><span>70-90</span><br>';
-   //div.innerHTML += '<i class="icon" style="background-image: url(https://d30y9cdsu7xlg0.cloudfront.net/png/194515-200.png);background-repeat: no-repeat;"></i><span>Grænse</span><br>';
+    // div.innerHTML += '<i class="legend" style="background-color: "white"</span><br>';
     
     
 
