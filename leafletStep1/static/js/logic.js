@@ -18,10 +18,20 @@ function createMap(earthquakes) {
     accessToken: API_KEY
   });
 
+  var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    tileSize: 512,
+    maxZoom: 18,
+    zoomOffset: -1,
+    id: "mapbox/satellite-v9",
+    accessToken: API_KEY
+  });
+
   // Define a baseMaps object to hold our base layers **DARK MAP LOADS FIRST
   var baseMaps = {
     "Dark Map": darkmap,
-    "Light Map": lightmap
+    "Light Map": lightmap,
+    "Satellite": satellite
   };
 
   // Create overlay object to hold our overlay layer
@@ -46,16 +56,6 @@ function createMap(earthquakes) {
     collapsed: false
   }).addTo(myMap);
 
-  function getColor(d) {
-    return d > 90 ? "#C6ACD4" :
-           d >= 70  ? "#C6ACD4" :
-           d >= 50  ? "#F68B76" :
-           d >= 30  ? "##FDDE90" :
-           d >= 10   ? "#CBE6A3" :
-           d >= -10   ? "#84E1CA" :
-                      "#86FF33";
-  }
-
   // Create a legend to display information about our map
   var info = L.control({
     position: "bottomright"
@@ -64,26 +64,13 @@ function createMap(earthquakes) {
   info.onAdd = function() {
     var div = L.DomUtil.create("div", "legend")
     depth = [-10, 10, 30, 50, 70, 90]
-        labels = [];
-        div.innerHTML += "<h4>Earthquake Depth (km)</h4>"
-
-    // loop through our density intervals and generate a label with a colored square for each interval
-    // for (var i = 0; i < depth.length; i++) {
-    //     div.innerHTML +=
-    //         '<i style="background:' + getColor(depth[i] + 1) + '"></i> ' +
-    //         depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
-    // }
-
-    
-    // div.innerHTML += "<h4>Earthquake Depth (km)</h4>";
+    // labels = [];
+    div.innerHTML += "<h4>Earthquake Depth (km)</h4>"
     div.innerHTML += '<i style="background: #84E1CA"></i><span>-10-10</span><br>';
     div.innerHTML += '<i style="background: #CBE6A3"></i><span>10-30</span><br>';
     div.innerHTML += '<i style="background: #FDDE90"></i><span>30-50</span><br>';
     div.innerHTML += '<i style="background: #F68B76"></i><span>50-70</span><br>';
     div.innerHTML += '<i style="background: #C6ACD4"></i><span>70-90</span><br>';
-    // div.innerHTML += '<i class="legend" style="background-color: "white"</span><br>';
-    
-    
 
     return div;
   };
@@ -118,8 +105,8 @@ function createFeatures(geojson) {
   
 
   // Create a GeoJSON layer containing the features array on the earthquakeData object
-  // Run the onEachFeature function once for each piece of data in the array
-  // ****** THIS MAY BE WHERE THE CIRCLES ARE CREATED!!****
+  // Run the onEachFeature function once for each piece of data 
+  // ****** WHERE THE CIRCLES ARE CREATED!!****
   var earthquakes = L.geoJSON(geojson, {
     onEachFeature: function (feature, layer) {
       // Setting the marker radius for the city by passing population into the markerSize function
@@ -132,11 +119,9 @@ function createFeatures(geojson) {
         radius: (geoJsonPoint.properties.mag * 3),
         color: getValue(geoJsonPoint.geometry.coordinates[2]),
         opacity: 1,
-        // riseOnHover: true,
-        // riseOffset: 250,
         fillOpacity: .7
       });
-  }
+    }
   });
   
 
