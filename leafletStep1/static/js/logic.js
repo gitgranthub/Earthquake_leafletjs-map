@@ -66,11 +66,11 @@ function createMap(earthquakes) {
     depth = [-10, 10, 30, 50, 70, 90]
     // labels = [];
     div.innerHTML += "<h4>Earthquake Depth (km)</h4>"
-    div.innerHTML += '<i style="background: #84E1CA"></i><span>-10-10</span><br>';
-    div.innerHTML += '<i style="background: #CBE6A3"></i><span>10-30</span><br>';
-    div.innerHTML += '<i style="background: #FDDE90"></i><span>30-50</span><br>';
-    div.innerHTML += '<i style="background: #F68B76"></i><span>50-70</span><br>';
-    div.innerHTML += '<i style="background: #C6ACD4"></i><span>70-90</span><br>';
+    div.innerHTML += '<i style="background: #84E1CA"></i><span>-10 - 10</span><br>';
+    div.innerHTML += '<i style="background: #CBE6A3"></i><span>10 - 30</span><br>';
+    div.innerHTML += '<i style="background: #FDDE90"></i><span>30 - 50</span><br>';
+    div.innerHTML += '<i style="background: #F68B76"></i><span>50 - 70</span><br>';
+    div.innerHTML += '<i style="background: #C6ACD4"></i><span>70 - 90+</span><br>';
 
     return div;
   };
